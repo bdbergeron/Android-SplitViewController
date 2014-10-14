@@ -1,0 +1,31 @@
+<!--
+  ~ Copyright (c) 2014 Bradley David Bergeron
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<resources>
+    <string name="app_name">SplitViewController</string>
+
+    <string name="loremipsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer tristique leo mattis sem. Sed in ipsum quis velit viverra mollis. Vestibulum malesuada. Suspendisse nunc felis, mattis nec, ultrices eget, scelerisque vitae, erat. Ut eget tellus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin elementum auctor sapien. Duis purus arcu, tempor sit amet, porta et, facilisis vel, lectus. Nulla facilisi. Praesent volutpat. Nunc aliquam fringilla magna.\n\n
+Etiam mattis tempor lacus. Fusce arcu ante, ultrices in, posuere id, porta ut, diam. Quisque justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla ipsum augue, posuere ut, euismod a, feugiat vel, pede. Cras in nisl nec magna volutpat ultricies. Donec sollicitudin. Vestibulum dignissim orci non sem euismod vehicula. In at sem vel elit egestas euismod. Donec ac leo ut leo convallis nonummy. Integer semper metus sed turpis. Nulla facilisi. Ut gravida est luctus quam. Praesent orci dui, hendrerit non, tincidunt sit amet, tempor tristique, justo.\n\n
+Vivamus quam felis, faucibus vitae, imperdiet et, commodo eu, lectus. Nullam iaculis quam et enim. Sed ultrices sodales velit. Fusce in tellus sagittis mi hendrerit dignissim. Vivamus cursus nibh eu nisi. Suspendisse ornare tortor. Suspendisse quis libero sed odio aliquam semper. Suspendisse sodales magna at nulla pulvinar dapibus. Phasellus sagittis euismod urna. Integer eros dolor, condimentum ut, lobortis vitae, facilisis ac, erat. Duis tincidunt turpis sit amet nunc.\n\n
+Morbi vitae lorem a justo congue mattis. Maecenas tristique interdum tortor. Ut condimentum eros vel arcu. Sed iaculis commodo odio. Nullam molestie adipiscing nibh. Vivamus quis quam vel metus volutpat molestie. Nullam faucibus dui vel pede. Suspendisse purus felis, fringilla ac, consequat ut, interdum vel, odio. Suspendisse turpis. Proin sodales risus nec erat.\n\n
+Suspendisse in arcu et sapien blandit dapibus. Pellentesque a est vitae quam tincidunt auctor. Etiam nisi. Maecenas suscipit justo vitae diam. Nunc vitae tellus ac neque egestas vulputate. Morbi congue sem dictum ligula. Sed in elit. Cras facilisis luctus tellus. Nunc fringilla turpis eget dui. Integer non lorem eget nisi porttitor interdum. Curabitur pharetra, dolor vel placerat fermentum, pede nulla egestas leo, at varius nulla eros at pede. Proin eget ligula vel mi gravida bibendum. In est turpis, tempor non, semper in, rhoncus feugiat, eros. Sed sit amet turpis sit amet velit ornare accumsan. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam volutpat condimentum elit. Vivamus egestas erat eget turpis. Suspendisse lacus lectus, posuere non, placerat eu, tincidunt ac, felis.</string>
+</resources>
