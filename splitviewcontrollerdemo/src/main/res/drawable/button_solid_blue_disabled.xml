@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2014 Bradley David Bergeron
   ~
@@ -20,11 +21,11 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="SplitViewTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
-
-</resources>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/button_solid_blue_normal" />
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#7FFFFFFF" />
+        </shape>
+    </item>
+</layer-list>

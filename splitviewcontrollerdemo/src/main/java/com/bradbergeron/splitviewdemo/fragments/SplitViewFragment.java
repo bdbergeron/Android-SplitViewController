@@ -50,6 +50,11 @@ public class SplitViewFragment extends SplitViewController {
                 }
             };
 
+
+    // ================================================================================
+    // Fragment Lifecycle
+    // ================================================================================
+
     @Override
     public View onCreateView (final LayoutInflater inflater, final ViewGroup container,
                               final Bundle savedInstanceState) {
@@ -85,6 +90,11 @@ public class SplitViewFragment extends SplitViewController {
         super.onStop();
     }
 
+
+    // ================================================================================
+    // Split View Controller
+    // ================================================================================
+
     @Override
     public int getMasterFragmentContainerId () {
         return R.id.masterView;
@@ -95,20 +105,10 @@ public class SplitViewFragment extends SplitViewController {
         return R.id.detailView;
     }
 
-
-    // ================================================================================
-    // Properties
-    // ================================================================================
-
     @Override
     public boolean isSplitViewLayout () {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
-
-
-    // ================================================================================
-    // SplitViewNavigationDelegate
-    // ================================================================================
 
     @Override
     public void setTitle (final CharSequence title) {
@@ -126,10 +126,5 @@ public class SplitViewFragment extends SplitViewController {
         if (actionBar != null) {
             actionBar.setSubtitle(subtitle);
         }
-    }
-
-    @Override
-    public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
-        return isSplitViewLayout() ? detailItemCount > 1 : detailItemCount > 0;
     }
 }

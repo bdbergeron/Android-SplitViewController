@@ -22,56 +22,35 @@
 
 package com.bradbergeron.splitviewdemo.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bradbergeron.splitviewdemo.R;
-import com.bradbergeron.splitviewdemo.fragments.SplitViewFragment;
 
 /*
- * Created by Bradley David Bergeron on 10/14/14.
+ * Created by Bradley David Bergeron on 10/15/14.
  */
-public class MainActivity extends Activity {
+public class AboutActivity extends Activity {
     @Override
     protected void onCreate (final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activty_main);
+        final ActionBar actionBar = getActionBar();
 
-        final int contentId = R.id.content;
-
-        if (savedInstanceState != null) {
-            return;
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        final Fragment fragment = Fragment.instantiate(this, SplitViewFragment.class.getName());
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(contentId, fragment);
-        transaction.commit();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu (final Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        return true;
+        setContentView(R.layout.activity_about);
     }
 
     @Override
     public boolean onOptionsItemSelected (final MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                getFragmentManager().popBackStack();
-
-                return true;
-            }
-            case R.id.mainMenu_aboutMenuItem: {
-                startActivity(new Intent(this, AboutActivity.class));
+                finish();
 
                 return true;
             }

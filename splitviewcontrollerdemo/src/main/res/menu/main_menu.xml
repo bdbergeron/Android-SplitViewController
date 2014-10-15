@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (c) 2014 Bradley David Bergeron
   ~
@@ -20,11 +22,9 @@
   ~ SOFTWARE.
   -->
 
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="SplitViewTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
-
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mainMenu_aboutMenuItem"
+        android:title="About"
+        android:showAsAction="never" />
+</menu>
