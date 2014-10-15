@@ -22,21 +22,34 @@
 
 package com.bradbergeron.splitviewdemo.fragments;
 
+import android.app.ActionBar;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bradbergeron.splitviewcontroller.SplitViewControllerFragment;
+import com.bradbergeron.splitviewcontroller.SplitViewController;
 import com.bradbergeron.splitviewcontroller.SplitViewMasterFragment;
 import com.bradbergeron.splitviewdemo.R;
 
 /*
  * Created by Bradley David Bergeron on 10/14/14.
  */
-public class SplitViewFragment extends SplitViewControllerFragment {
+public class SplitViewFragment extends SplitViewController {
+    private final FragmentManager.OnBackStackChangedListener mBackStackListener =
+            new FragmentManager.OnBackStackChangedListener() {
+                @Override
+                public void onBackStackChanged () {
+                    if (getFragmentManager().getBackStackEntryCount() == 0) {
+                        setTitle(getString(R.string.app_name));
+                    }
+                }
+            };
+
     @Override
     public View onCreateView (final LayoutInflater inflater, final ViewGroup container,
                               final Bundle savedInstanceState) {
@@ -59,6 +72,20 @@ public class SplitViewFragment extends SplitViewControllerFragment {
     }
 
     @Override
+    public void onStart () {
+        super.onStart();
+
+        getFragmentManager().addOnBackStackChangedListener(mBackStackListener);
+    }
+
+    @Override
+    public void onStop () {
+        getFragmentManager().removeOnBackStackChangedListener(mBackStackListener);
+
+        super.onStop();
+    }
+
+    @Override
     public int getMasterFragmentContainerId () {
         return R.id.masterView;
     }
@@ -66,5 +93,43 @@ public class SplitViewFragment extends SplitViewControllerFragment {
     @Override
     public int getDetailFragmentContainerId () {
         return R.id.detailView;
+    }
+
+
+    // ================================================================================
+    // Properties
+    // ================================================================================
+
+    @Override
+    public boolean isSplitViewLayout () {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+
+    // ================================================================================
+    // SplitViewNavigationDelegate
+    // ================================================================================
+
+    @Override
+    public void setTitle (final CharSequence title) {
+        final ActionBar actionBar = getActivity().getActionBar();
+
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
+    }
+
+    @Override
+    public void setSubtitle (final CharSequence subtitle) {
+        final ActionBar actionBar = getActivity().getActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSubtitle(subtitle);
+        }
+    }
+
+    @Override
+    public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
+        return isSplitViewLayout() ? detailItemCount > 1 : detailItemCount > 0;
     }
 }

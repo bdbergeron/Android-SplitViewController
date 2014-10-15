@@ -22,11 +22,15 @@
 
 package com.bradbergeron.splitviewcontroller;
 
-import android.app.Fragment;
-
 /*
  * Created by Bradley David Bergeron on 10/14/14.
  */
-public interface SplitViewControllerDelegate {
-    public void showDetailFragment (final SplitViewDetailFragment detailFragment);
+public interface SplitViewNavigationDelegate {
+    public boolean usesNavigationDrawer ();
+
+    public boolean shouldShowActionBarNavigationDrawerIndicator (final int detailItemCount);
+
+    public boolean shouldShowActionBarUpIndicator (final int detailItemCount);
+
+    public void onDetailItemCountChanged (final int detailItemCount);
 }

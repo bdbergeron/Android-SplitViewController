@@ -22,19 +22,11 @@
 
 package com.bradbergeron.splitviewcontroller;
 
-import android.app.Fragment;
-
 /*
  * Created by Bradley David Bergeron on 10/14/14.
  */
-public abstract class SplitViewMasterFragment extends Fragment {
-    private SplitViewControllerFragment mController;
-
-    public void setController (final SplitViewControllerFragment controller) {
-        mController = controller;
-    }
-
+public abstract class SplitViewMasterFragment extends SplitViewAbsFragment {
     protected void setDetailFragment (final SplitViewDetailFragment detailFragment) {
-        mController.setDetailFragment(detailFragment);
+        getController().setDetailFragment(detailFragment);
     }
 }

@@ -59,4 +59,11 @@ public class MoreDetailsFragment extends SplitViewDetailFragment {
 
         return view;
     }
+
+    @Override
+    public void onResume () {
+        super.onResume();
+
+        setTitle(mItemName + ": More Information");
+    }
 }

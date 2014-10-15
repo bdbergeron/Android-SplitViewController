@@ -24,6 +24,7 @@ package com.bradbergeron.splitviewdemo.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.bradbergeron.splitviewdemo.R;
 
@@ -36,5 +37,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activty_main);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (final MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                getFragmentManager().popBackStack();
+
+                return true;
+            }
+            default: {
+                return super.onOptionsItemSelected(item);
+            }
+        }
     }
 }

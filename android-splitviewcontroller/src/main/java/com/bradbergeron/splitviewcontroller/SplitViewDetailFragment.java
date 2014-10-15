@@ -22,14 +22,15 @@
 
 package com.bradbergeron.splitviewcontroller;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 
 /*
  * Created by Bradley David Bergeron on 10/14/14.
  */
-public abstract class SplitViewDetailFragment extends Fragment {
+public abstract class SplitViewDetailFragment extends SplitViewAbsFragment {
     protected void pushDetailFragment (final SplitViewDetailFragment detailFragment) {
+        detailFragment.setController(getController());
+
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(getId(), detailFragment);
         transaction.addToBackStack(null);

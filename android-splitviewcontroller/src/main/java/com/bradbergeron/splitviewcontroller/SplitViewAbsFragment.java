@@ -23,42 +23,34 @@
 package com.bradbergeron.splitviewcontroller;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.os.Bundle;
 
 /*
- * Created by Bradley David Bergeron on 10/14/14.
+ * Created by Bradley David Bergeron on 10/15/14.
  */
-public abstract class SplitViewControllerFragment extends Fragment {
+abstract class SplitViewAbsFragment extends Fragment {
+    private SplitViewController mController;
 
     @Override
-    public void onStart () {
-        super.onStart();
+    public void onCreate (final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        final SplitViewMasterFragment masterFragment =
-                (SplitViewMasterFragment) getFragmentManager()
-                        .findFragmentById(getMasterFragmentContainerId());
-
-        if (masterFragment == null) {
-            throw new IllegalStateException("Master view could not be found.");
-        }
-
-        masterFragment.setController(this);
+        setRetainInstance(true);
     }
 
-    public abstract int getMasterFragmentContainerId ();
+    public void setController (final SplitViewController controller) {
+        mController = controller;
+    }
 
-    public abstract int getDetailFragmentContainerId ();
+    protected SplitViewController getController () {
+        return mController;
+    }
 
-    public void setDetailFragment (final SplitViewDetailFragment detailFragment) {
-        final FragmentManager fragmentManager = getFragmentManager();
+    protected void setTitle (final CharSequence title) {
+        mController.setTitle(title);
+    }
 
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
-
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(getDetailFragmentContainerId(), detailFragment);
-        transaction.commit();
+    protected void setSubtitle (final CharSequence subtitle) {
+        mController.setSubtitle(subtitle);
     }
 }

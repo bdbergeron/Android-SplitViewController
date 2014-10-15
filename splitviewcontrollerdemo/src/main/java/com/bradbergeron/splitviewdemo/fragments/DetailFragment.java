@@ -78,4 +78,11 @@ public class DetailFragment extends SplitViewDetailFragment {
 
         return view;
     }
+
+    @Override
+    public void onResume () {
+        super.onResume();
+
+        setTitle(mItemName);
+    }
 }
