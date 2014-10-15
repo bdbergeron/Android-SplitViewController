@@ -25,11 +25,7 @@ package com.bradbergeron.splitviewcontroller;
 /*
  * Created by Bradley David Bergeron on 10/14/14.
  */
-public interface SplitViewNavigationDelegate {
-    public boolean usesNavigationDrawer ();
-
-    public boolean shouldShowActionBarNavigationDrawerIndicator (final int detailItemCount);
-
+public interface SplitViewNavigationListener {
     public boolean shouldShowActionBarUpIndicator (final int detailItemCount);
 
     public void onDetailItemCountChanged (final int detailItemCount);

@@ -28,6 +28,11 @@ import android.app.FragmentTransaction;
  * Created by Bradley David Bergeron on 10/14/14.
  */
 public abstract class SplitViewDetailFragment extends SplitViewAbsFragment {
+
+    // ================================================================================
+    // Presentation
+    // ================================================================================
+
     protected void pushDetailFragment (final SplitViewDetailFragment detailFragment) {
         detailFragment.setController(getController());
 

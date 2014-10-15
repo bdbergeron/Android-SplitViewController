@@ -31,24 +31,21 @@ import android.os.Bundle;
 /*
  * Created by Bradley David Bergeron on 10/14/14.
  */
-public abstract class SplitViewController extends Fragment implements SplitViewNavigationDelegate {
+public abstract class SplitViewController extends Fragment implements SplitViewNavigationListener {
     private final FragmentManager.OnBackStackChangedListener mBackStackListener =
             new FragmentManager.OnBackStackChangedListener() {
                 @Override
                 public void onBackStackChanged () {
-                    final int detailItemCount = getFragmentManager().getBackStackEntryCount();
-
-                    if (detailItemCount == 0 && !isSplitViewLayout()) {
-                        attachMasterFragment();
-
-                        return;
-                    }
-
-                    onDetailItemCountChanged(detailItemCount);
+                    configureDetailFragment();
                 }
             };
 
     private SplitViewMasterFragment mMasterFragment;
+
+
+    // ================================================================================
+    // Fragment Lifecycle
+    // ================================================================================
 
     @Override
     public void onCreate (final Bundle savedInstanceState) {
@@ -61,7 +58,16 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     public void onStart () {
         super.onStart();
 
-        configureMasterDetailFragments();
+        mMasterFragment = (SplitViewMasterFragment) getFragmentManager()
+                .findFragmentById(getMasterFragmentContainerId());
+
+        if (mMasterFragment == null) {
+            throw new IllegalStateException("Master view Fragment could not be found.");
+        }
+
+        mMasterFragment.setController(this);
+
+        configureDetailFragment();
 
         getFragmentManager().addOnBackStackChangedListener(mBackStackListener);
     }
@@ -73,48 +79,29 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         super.onStop();
     }
 
-    private void configureMasterDetailFragments () {
-        mMasterFragment = (SplitViewMasterFragment) getFragmentManager()
-                .findFragmentById(getMasterFragmentContainerId());
 
-        if (mMasterFragment == null) {
-            throw new IllegalStateException("Master view Fragment could not be found.");
-        }
+    // ================================================================================
+    // Master Fragment
+    // ================================================================================
 
-        mMasterFragment.setController(this);
-
-        final SplitViewDetailFragment detailFragment =
-                (SplitViewDetailFragment) getFragmentManager()
-                        .findFragmentById(getDetailFragmentContainerId());
-
-        if (detailFragment != null) {
-            detailFragment.setController(this);
-        }
-
-        if (!isSplitViewLayout() && detailFragment != null) {
-            detachMasterFragment();
-        } else if (mMasterFragment.isDetached()) {
-            attachMasterFragment();
-        }
-    }
+    public abstract int getMasterFragmentContainerId ();
 
     private void attachMasterFragment () {
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.attach(mMasterFragment);
         transaction.commit();
-
-        onDetailItemCountChanged(getFragmentManager().getBackStackEntryCount());
     }
 
     private void detachMasterFragment () {
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.detach(mMasterFragment);
         transaction.commit();
-
-        onDetailItemCountChanged(getFragmentManager().getBackStackEntryCount());
     }
 
-    public abstract int getMasterFragmentContainerId ();
+
+    // ================================================================================
+    // Detail Fragment
+    // ================================================================================
 
     public abstract int getDetailFragmentContainerId ();
 
@@ -138,6 +125,24 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         transaction.commit();
     }
 
+    private void configureDetailFragment () {
+        final SplitViewDetailFragment detailFragment =
+                (SplitViewDetailFragment) getFragmentManager()
+                        .findFragmentById(getDetailFragmentContainerId());
+
+        if (detailFragment != null) {
+            detailFragment.setController(this);
+        }
+
+        if (!isSplitViewLayout() && detailFragment != null) {
+            detachMasterFragment();
+        } else if (mMasterFragment.isDetached()) {
+            attachMasterFragment();
+        }
+
+        onDetailItemCountChanged(getFragmentManager().getBackStackEntryCount());
+    }
+
 
     // ================================================================================
     // Properties
@@ -151,22 +156,12 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
 
     // ================================================================================
-    // SplitViewNavigationDelegate
+    // SplitViewNavigationListener
     // ================================================================================
 
     @Override
-    public boolean usesNavigationDrawer () {
-        return false;
-    }
-
-    @Override
-    public boolean shouldShowActionBarNavigationDrawerIndicator (final int detailItemCount) {
-        return false;
-    }
-
-    @Override
     public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
-        return false;
+        return !isSplitViewLayout() && detailItemCount > 0;
     }
 
     @Override
@@ -174,7 +169,9 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         final ActionBar actionBar = getActivity().getActionBar();
 
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(shouldShowActionBarUpIndicator(detailItemCount));
+            final boolean showUpIndicator = shouldShowActionBarUpIndicator(detailItemCount);
+            actionBar.setDisplayHomeAsUpEnabled(showUpIndicator);
+            actionBar.setHomeButtonEnabled(showUpIndicator);
         }
     }
 }

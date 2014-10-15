@@ -26,6 +26,11 @@ package com.bradbergeron.splitviewcontroller;
  * Created by Bradley David Bergeron on 10/14/14.
  */
 public abstract class SplitViewMasterFragment extends SplitViewAbsFragment {
+
+    // ================================================================================
+    // Presentation
+    // ================================================================================
+
     protected void setDetailFragment (final SplitViewDetailFragment detailFragment) {
         getController().setDetailFragment(detailFragment);
     }
