@@ -22,4 +22,4 @@
 
 
 
-include ':android-splitviewcontroller', ':splitviewcontrollerdemo'
+include ':splitviewcontroller', ':splitviewcontrollerdemo'
