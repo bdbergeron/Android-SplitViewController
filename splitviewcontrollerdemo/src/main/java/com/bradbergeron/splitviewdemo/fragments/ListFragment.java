@@ -25,6 +25,7 @@ package com.bradbergeron.splitviewdemo.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ import java.util.List;
  * Created by Bradley David Bergeron on 10/14/14.
  */
 public class ListFragment extends SplitViewMasterFragment {
+    private static final String TAG = ListFragment.class.getSimpleName();
+
     private final ArrayList<String> mItems = new ArrayList<String>() {{
         add("Item 1");
         add("Item 2");
@@ -82,6 +85,34 @@ public class ListFragment extends SplitViewMasterFragment {
         });
 
         return mListView;
+    }
+
+    @Override
+    public void onStart () {
+        super.onStart();
+
+        Log.d(TAG, "onStart");
+    }
+
+    @Override
+    public void onResume () {
+        super.onResume();
+
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    public void onPause () {
+        Log.d(TAG, "onPause");
+
+        super.onPause();
+    }
+
+    @Override
+    public void onStop () {
+        Log.d(TAG, "onStop");
+
+        super.onStop();
     }
 
     private class BaseListAdapter extends ArrayAdapter<String> {

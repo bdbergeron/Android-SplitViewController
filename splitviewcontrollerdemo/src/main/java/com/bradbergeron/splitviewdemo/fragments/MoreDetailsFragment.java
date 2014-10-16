@@ -23,6 +23,7 @@
 package com.bradbergeron.splitviewdemo.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import com.bradbergeron.splitviewdemo.R;
  * Created by Bradley David Bergeron on 10/14/14.
  */
 public class MoreDetailsFragment extends SplitViewDetailFragment {
+    private static final String TAG = MoreDetailsFragment.class.getSimpleName();
+
     private String mItemName;
 
     @Override
@@ -61,9 +64,32 @@ public class MoreDetailsFragment extends SplitViewDetailFragment {
     }
 
     @Override
+    public void onStart () {
+        super.onStart();
+
+        Log.d(TAG, "onStart");
+    }
+
+    @Override
     public void onResume () {
         super.onResume();
 
+        Log.d(TAG, "onResume");
+
         setTitle(mItemName + ": More Information");
+    }
+
+    @Override
+    public void onPause () {
+        Log.d(TAG, "onPause");
+
+        super.onPause();
+    }
+
+    @Override
+    public void onStop () {
+        Log.d(TAG, "onStop");
+
+        super.onStop();
     }
 }

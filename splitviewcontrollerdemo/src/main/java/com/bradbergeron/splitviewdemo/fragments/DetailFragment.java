@@ -24,6 +24,7 @@ package com.bradbergeron.splitviewdemo.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ import com.bradbergeron.splitviewdemo.R;
  * Created by Bradley David Bergeron on 10/14/14.
  */
 public class DetailFragment extends SplitViewDetailFragment {
+    private static final String TAG = DetailFragment.class.getSimpleName();
+
     public static final String ARGS_ITEM_NAME = "itemName";
 
     private String mItemName;
@@ -80,9 +83,32 @@ public class DetailFragment extends SplitViewDetailFragment {
     }
 
     @Override
+    public void onStart () {
+        super.onStart();
+
+        Log.d(TAG, "onStart");
+    }
+
+    @Override
     public void onResume () {
         super.onResume();
 
+        Log.d(TAG, "onResume");
+
         setTitle(mItemName);
+    }
+
+    @Override
+    public void onPause () {
+        Log.d(TAG, "onPause");
+
+        super.onPause();
+    }
+
+    @Override
+    public void onStop () {
+        Log.d(TAG, "onStop");
+
+        super.onStop();
     }
 }
