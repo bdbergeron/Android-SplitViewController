@@ -41,6 +41,7 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
             };
 
     private SplitViewMasterFragment mMasterFragment;
+    private SplitViewDetailFragment mDetailFragment;
 
 
     // ================================================================================
@@ -58,23 +59,48 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     public void onStart () {
         super.onStart();
 
-        mMasterFragment = (SplitViewMasterFragment) getFragmentManager()
-                .findFragmentById(getMasterFragmentContainerId());
-
         if (mMasterFragment == null) {
             throw new IllegalStateException("Master view Fragment could not be found.");
         }
 
         mMasterFragment.setController(this);
 
-        configureDetailFragment();
+        final FragmentManager fragmentManager = getFragmentManager();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        getFragmentManager().addOnBackStackChangedListener(mBackStackListener);
+        if (mMasterFragment.isDetached()) {
+            transaction.attach(mMasterFragment);
+        }
+
+        if (mDetailFragment != null && mDetailFragment.isDetached()) {
+            transaction.attach(mDetailFragment);
+        }
+
+        transaction.commit();
+
+        fragmentManager.addOnBackStackChangedListener(mBackStackListener);
+
+        configureDetailFragment();
     }
 
     @Override
     public void onStop () {
-        getFragmentManager().removeOnBackStackChangedListener(mBackStackListener);
+        final FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.removeOnBackStackChangedListener(mBackStackListener);
+
+        if (mMasterFragment != null || mDetailFragment != null) {
+            final FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            if (mMasterFragment != null) {
+                transaction.detach(mMasterFragment);
+            }
+
+            if (mDetailFragment != null) {
+                transaction.detach(mDetailFragment);
+            }
+
+            transaction.commitAllowingStateLoss();
+        }
 
         super.onStop();
     }
@@ -85,6 +111,10 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     // ================================================================================
 
     public abstract int getMasterFragmentContainerId ();
+
+    public void setMasterFragment (final SplitViewMasterFragment masterFragment) {
+        mMasterFragment = masterFragment;
+    }
 
     private void attachMasterFragment () {
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -106,13 +136,13 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     public abstract int getDetailFragmentContainerId ();
 
     public void setDetailFragment (final SplitViewDetailFragment detailFragment) {
+        detailFragment.setController(this);
+
         final FragmentManager fragmentManager = getFragmentManager();
 
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-
-        detailFragment.setController(this);
 
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(getDetailFragmentContainerId(), detailFragment);
@@ -123,18 +153,19 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         }
 
         transaction.commit();
+
+        mDetailFragment = detailFragment;
     }
 
     private void configureDetailFragment () {
-        final SplitViewDetailFragment detailFragment =
-                (SplitViewDetailFragment) getFragmentManager()
-                        .findFragmentById(getDetailFragmentContainerId());
+        mDetailFragment = (SplitViewDetailFragment) getFragmentManager()
+                .findFragmentById(getDetailFragmentContainerId());
 
-        if (detailFragment != null) {
-            detailFragment.setController(this);
+        if (mDetailFragment != null) {
+            mDetailFragment.setController(this);
         }
 
-        if (!isSplitViewLayout() && detailFragment != null) {
+        if (!isSplitViewLayout() && mDetailFragment != null) {
             detachMasterFragment();
         } else if (mMasterFragment.isDetached()) {
             attachMasterFragment();
@@ -170,8 +201,12 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
         if (actionBar != null) {
             final boolean showUpIndicator = shouldShowActionBarUpIndicator(detailItemCount);
-            actionBar.setDisplayHomeAsUpEnabled(showUpIndicator);
-            actionBar.setHomeButtonEnabled(showUpIndicator);
+            final boolean usesNavDrawer = usesNavigationDrawer();
+
+            actionBar.setDisplayHomeAsUpEnabled(showUpIndicator || usesNavDrawer);
+            actionBar.setHomeButtonEnabled(showUpIndicator || usesNavDrawer);
+
+            setNavigationDrawerEnabled(detailItemCount == 0 || isSplitViewLayout());
         }
     }
 }
