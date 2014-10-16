@@ -32,9 +32,6 @@ import android.webkit.WebView;
 
 import com.bradbergeron.splitviewdemo.R;
 
-/*
- * Created by Bradley David Bergeron on 10/16/14.
- */
 public class WebViewFragment extends Fragment {
     private static final String TAG = WebViewFragment.class.getSimpleName();
 

@@ -22,9 +22,6 @@
 
 package com.bradbergeron.splitviewcontroller;
 
-/*
- * Created by Bradley David Bergeron on 10/14/14.
- */
 public interface SplitViewNavigationListener {
     public boolean usesNavigationDrawer ();
 

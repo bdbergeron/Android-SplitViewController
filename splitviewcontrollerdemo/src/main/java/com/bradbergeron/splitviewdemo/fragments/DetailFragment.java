@@ -34,9 +34,6 @@ import android.widget.TextView;
 import com.bradbergeron.splitviewcontroller.SplitViewDetailFragment;
 import com.bradbergeron.splitviewdemo.R;
 
-/*
- * Created by Bradley David Bergeron on 10/14/14.
- */
 public class DetailFragment extends SplitViewDetailFragment {
     private static final String TAG = DetailFragment.class.getSimpleName();
 

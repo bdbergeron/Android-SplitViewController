@@ -39,9 +39,6 @@ import com.bradbergeron.splitviewdemo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Created by Bradley David Bergeron on 10/16/14.
- */
 public class DrawerFragment extends Fragment {
     private static final String TAG = DrawerFragment.class.getSimpleName();
 

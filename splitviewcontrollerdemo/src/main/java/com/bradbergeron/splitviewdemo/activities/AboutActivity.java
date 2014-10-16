@@ -29,9 +29,6 @@ import android.view.MenuItem;
 
 import com.bradbergeron.splitviewdemo.R;
 
-/*
- * Created by Bradley David Bergeron on 10/15/14.
- */
 public class AboutActivity extends Activity {
 
     // ================================================================================

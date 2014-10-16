@@ -25,9 +25,6 @@ package com.bradbergeron.splitviewcontroller;
 import android.app.Fragment;
 import android.os.Bundle;
 
-/*
- * Created by Bradley David Bergeron on 10/15/14.
- */
 abstract class SplitViewAbsFragment extends Fragment {
     private SplitViewController mController;
 

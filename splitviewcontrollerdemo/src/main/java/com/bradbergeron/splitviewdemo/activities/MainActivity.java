@@ -41,9 +41,6 @@ import android.view.View;
 import com.bradbergeron.splitviewdemo.R;
 import com.bradbergeron.splitviewdemo.fragments.DrawerFragment;
 
-/*
- * Created by Bradley David Bergeron on 10/14/14.
- */
 public class MainActivity extends Activity implements DrawerFragment.DrawerItemSelectionListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 

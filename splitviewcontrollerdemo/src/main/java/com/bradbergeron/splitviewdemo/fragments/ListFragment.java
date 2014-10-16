@@ -39,9 +39,6 @@ import com.bradbergeron.splitviewdemo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Created by Bradley David Bergeron on 10/14/14.
- */
 public class ListFragment extends SplitViewMasterFragment {
     private static final String TAG = ListFragment.class.getSimpleName();
 

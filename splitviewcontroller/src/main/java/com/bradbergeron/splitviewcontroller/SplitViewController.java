@@ -28,9 +28,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-/*
- * Created by Bradley David Bergeron on 10/14/14.
- */
 public abstract class SplitViewController extends Fragment implements SplitViewNavigationListener {
     private final FragmentManager.OnBackStackChangedListener mBackStackListener =
             new FragmentManager.OnBackStackChangedListener() {

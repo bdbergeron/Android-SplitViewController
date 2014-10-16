@@ -39,9 +39,6 @@ import com.bradbergeron.splitviewcontroller.SplitViewMasterFragment;
 import com.bradbergeron.splitviewdemo.R;
 import com.bradbergeron.splitviewdemo.activities.MainActivity;
 
-/*
- * Created by Bradley David Bergeron on 10/14/14.
- */
 public class SplitViewFragment extends SplitViewController {
     private static final String TAG = SplitViewFragment.class.getSimpleName();
 
