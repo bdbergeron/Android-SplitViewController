@@ -23,6 +23,9 @@
 <resources>
     <string name="app_name">SplitViewControllerDemo</string>
 
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
     <string name="library_name">Android-SplitViewController</string>
 
     <string name="loremipsum">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer tristique leo mattis sem. Sed in ipsum quis velit viverra mollis. Vestibulum malesuada. Suspendisse nunc felis, mattis nec, ultrices eget, scelerisque vitae, erat. Ut eget tellus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin elementum auctor sapien. Duis purus arcu, tempor sit amet, porta et, facilisis vel, lectus. Nulla facilisi. Praesent volutpat. Nunc aliquam fringilla magna.\n\n

@@ -33,6 +33,11 @@ import com.bradbergeron.splitviewdemo.R;
  * Created by Bradley David Bergeron on 10/15/14.
  */
 public class AboutActivity extends Activity {
+
+    // ================================================================================
+    // Lifecycle
+    // ================================================================================
+
     @Override
     protected void onCreate (final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,11 @@ public class AboutActivity extends Activity {
 
         setContentView(R.layout.activity_about);
     }
+
+
+    // ================================================================================
+    // Options Menu
+    // ================================================================================
 
     @Override
     public boolean onOptionsItemSelected (final MenuItem item) {

@@ -54,13 +54,18 @@ public class ListFragment extends SplitViewMasterFragment {
     }};
 
     private ListView mListView;
-    private BaseListAdapter mListAdapter;
+    private StringListAdapter mListAdapter;
+
+
+    // ================================================================================
+    // Lifecycle
+    // ================================================================================
 
     @Override
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mListAdapter = new BaseListAdapter(getActivity(), mItems);
+        mListAdapter = new StringListAdapter(getActivity(), mItems);
     }
 
     @Override
@@ -115,8 +120,13 @@ public class ListFragment extends SplitViewMasterFragment {
         super.onStop();
     }
 
-    private class BaseListAdapter extends ArrayAdapter<String> {
-        public BaseListAdapter (final Context context, final List<String> objects) {
+
+    // ================================================================================
+    // List Adapter
+    // ================================================================================
+
+    private class StringListAdapter extends ArrayAdapter<String> {
+        public StringListAdapter (final Context context, final List<String> objects) {
             super(context, android.R.layout.simple_list_item_1, objects);
         }
     }

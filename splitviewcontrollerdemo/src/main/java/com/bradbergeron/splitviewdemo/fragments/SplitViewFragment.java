@@ -23,6 +23,7 @@
 package com.bradbergeron.splitviewdemo.fragments;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -36,6 +37,7 @@ import android.view.ViewGroup;
 import com.bradbergeron.splitviewcontroller.SplitViewController;
 import com.bradbergeron.splitviewcontroller.SplitViewMasterFragment;
 import com.bradbergeron.splitviewdemo.R;
+import com.bradbergeron.splitviewdemo.activities.MainActivity;
 
 /*
  * Created by Bradley David Bergeron on 10/14/14.
@@ -55,7 +57,7 @@ public class SplitViewFragment extends SplitViewController {
 
 
     // ================================================================================
-    // Fragment Lifecycle
+    // Lifecycle
     // ================================================================================
 
     @Override
@@ -75,6 +77,8 @@ public class SplitViewFragment extends SplitViewController {
                             masterFragment.getClass().getName());
             transaction.commit();
         }
+
+        setMasterFragment(masterFragment);
 
         return view;
     }
@@ -136,7 +140,7 @@ public class SplitViewFragment extends SplitViewController {
         final ActionBar actionBar = getActivity().getActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle(title);
+            actionBar.setTitle(isSplitViewLayout() ? getString(R.string.app_name) : title);
         }
     }
 
@@ -145,7 +149,26 @@ public class SplitViewFragment extends SplitViewController {
         final ActionBar actionBar = getActivity().getActionBar();
 
         if (actionBar != null) {
-            actionBar.setSubtitle(subtitle);
+            actionBar.setSubtitle(isSplitViewLayout() ? null : subtitle);
+        }
+    }
+
+
+    // ================================================================================
+    // Split View Navigation Listener
+    // ================================================================================
+
+    @Override
+    public boolean usesNavigationDrawer () {
+        return true;
+    }
+
+    @Override
+    public void setNavigationDrawerEnabled (final boolean enabled) {
+        final Activity activity = getActivity();
+
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).setNavigationDrawerEnabled(enabled);
         }
     }
 }
