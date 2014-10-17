@@ -187,6 +187,15 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     // SplitViewNavigationListener
     // ================================================================================
 
+
+    @Override
+    public boolean usesNavigationDrawer () {
+        return false;
+    }
+
+    @Override
+    public void setNavigationDrawerEnabled (final boolean enabled) { }
+
     @Override
     public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
         return !isSplitViewLayout() && detailItemCount > 0;
