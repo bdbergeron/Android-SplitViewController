@@ -39,7 +39,7 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name="com.bradbergeron.splitviewdemo.fragments.DrawerFragment"
+        android:name="com.bradbergeron.splitviewcontrollerdemo.fragments.DrawerFragment"
         tools:layout="@layout/fragment_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

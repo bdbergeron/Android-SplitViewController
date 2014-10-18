@@ -22,4 +22,4 @@
 
 
 
-include ':splitviewcontroller', ':splitviewcontrollerdemo'
+include ':SplitViewController', ':SplitViewControllerDemo'

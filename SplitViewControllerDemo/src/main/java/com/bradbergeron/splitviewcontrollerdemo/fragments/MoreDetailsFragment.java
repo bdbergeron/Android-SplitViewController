@@ -20,38 +20,22 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.fragments;
+package com.bradbergeron.splitviewcontrollerdemo.fragments;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
-import com.bradbergeron.splitviewcontroller.SplitViewMasterFragment;
-import com.bradbergeron.splitviewdemo.R;
+import com.bradbergeron.splitviewcontroller.SplitViewDetailFragment;
+import com.bradbergeron.splitviewcontrollerdemo.R;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MoreDetailsFragment extends SplitViewDetailFragment {
+    private static final String TAG = MoreDetailsFragment.class.getSimpleName();
 
-public class ListFragment extends SplitViewMasterFragment {
-    private static final String TAG = ListFragment.class.getSimpleName();
-
-    private final ArrayList<String> mItems = new ArrayList<String>() {{
-        add("Item 1");
-        add("Item 2");
-        add("Item 3");
-        add("Item 4");
-        add("Item 5");
-    }};
-
-    private ListView mListView;
-    private StringListAdapter mListAdapter;
+    private String mItemName;
 
 
     // ================================================================================
@@ -62,31 +46,23 @@ public class ListFragment extends SplitViewMasterFragment {
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mListAdapter = new StringListAdapter(getActivity(), mItems);
+        final Bundle args = getArguments();
+
+        if (args != null) {
+            mItemName = args.getString(DetailFragment.ARGS_ITEM_NAME);
+        }
     }
 
     @Override
     public View onCreateView (final LayoutInflater inflater, final ViewGroup container,
                               final Bundle savedInstanceState) {
-        mListView = (ListView) inflater.inflate(R.layout.fragment_listview, container, false);
-        mListView.setAdapter(mListAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick (final AdapterView<?> parent, final View view,
-                                     final int position, final long id) {
-                final String itemName = mItems.get(position);
+        final View view = inflater.inflate(R.layout.fragment_moredetails, container, false);
 
-                final Bundle args = new Bundle();
-                args.putString(DetailFragment.ARGS_ITEM_NAME, itemName);
+        final TextView itemNameTextView =
+                (TextView) view.findViewById(R.id.moreDetails_itemNameTextView);
+        itemNameTextView.setText(mItemName);
 
-                final DetailFragment detailFragment = (DetailFragment) Fragment
-                        .instantiate(getActivity(), DetailFragment.class.getName(), args);
-
-                setDetailFragment(detailFragment);
-            }
-        });
-
-        return mListView;
+        return view;
     }
 
     @Override
@@ -101,6 +77,8 @@ public class ListFragment extends SplitViewMasterFragment {
         super.onResume();
 
         Log.d(TAG, "onResume");
+
+        setTitle(mItemName + ": More Information");
     }
 
     @Override
@@ -115,16 +93,5 @@ public class ListFragment extends SplitViewMasterFragment {
         Log.d(TAG, "onStop");
 
         super.onStop();
-    }
-
-
-    // ================================================================================
-    // List Adapter
-    // ================================================================================
-
-    private class StringListAdapter extends ArrayAdapter<String> {
-        public StringListAdapter (final Context context, final List<String> objects) {
-            super(context, android.R.layout.simple_list_item_1, objects);
-        }
     }
 }

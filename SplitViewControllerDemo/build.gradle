@@ -45,6 +45,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile project(':SplitViewController')
+
     compile 'com.android.support:support-v4:20.0.0'
-    compile project(':splitviewcontroller')
 }

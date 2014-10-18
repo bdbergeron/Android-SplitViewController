@@ -20,14 +20,14 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.activities;
+package com.bradbergeron.splitviewcontrollerdemo.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.bradbergeron.splitviewdemo.R;
+import com.bradbergeron.splitviewcontrollerdemo.R;
 
 public class AboutActivity extends Activity {
 

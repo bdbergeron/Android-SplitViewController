@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.fragments;
+package com.bradbergeron.splitviewcontrollerdemo.fragments;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -36,8 +36,8 @@ import android.view.ViewGroup;
 
 import com.bradbergeron.splitviewcontroller.SplitViewController;
 import com.bradbergeron.splitviewcontroller.SplitViewMasterFragment;
-import com.bradbergeron.splitviewdemo.R;
-import com.bradbergeron.splitviewdemo.activities.MainActivity;
+import com.bradbergeron.splitviewcontrollerdemo.R;
+import com.bradbergeron.splitviewcontrollerdemo.activities.MainActivity;
 
 public class SplitViewFragment extends SplitViewController {
     private static final String TAG = SplitViewFragment.class.getSimpleName();

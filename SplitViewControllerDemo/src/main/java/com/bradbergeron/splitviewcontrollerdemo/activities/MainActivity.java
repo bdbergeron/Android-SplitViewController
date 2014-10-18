@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.activities;
+package com.bradbergeron.splitviewcontrollerdemo.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -38,8 +38,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.bradbergeron.splitviewdemo.R;
-import com.bradbergeron.splitviewdemo.fragments.DrawerFragment;
+import com.bradbergeron.splitviewcontrollerdemo.R;
+import com.bradbergeron.splitviewcontrollerdemo.fragments.DrawerFragment;
 
 public class MainActivity extends Activity implements DrawerFragment.DrawerItemSelectionListener {
     private static final String TAG = MainActivity.class.getSimpleName();

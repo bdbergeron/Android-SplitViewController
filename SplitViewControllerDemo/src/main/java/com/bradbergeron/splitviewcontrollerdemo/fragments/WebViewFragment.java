@@ -20,22 +20,22 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.fragments;
+package com.bradbergeron.splitviewcontrollerdemo.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebView;
 
-import com.bradbergeron.splitviewcontroller.SplitViewDetailFragment;
-import com.bradbergeron.splitviewdemo.R;
+import com.bradbergeron.splitviewcontrollerdemo.R;
 
-public class MoreDetailsFragment extends SplitViewDetailFragment {
-    private static final String TAG = MoreDetailsFragment.class.getSimpleName();
+public class WebViewFragment extends Fragment {
+    private static final String TAG = WebViewFragment.class.getSimpleName();
 
-    private String mItemName;
+    private static final String GITHUB_URL = "https://github.com/bdbergeron";
 
 
     // ================================================================================
@@ -43,26 +43,13 @@ public class MoreDetailsFragment extends SplitViewDetailFragment {
     // ================================================================================
 
     @Override
-    public void onCreate (final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle args = getArguments();
-
-        if (args != null) {
-            mItemName = args.getString(DetailFragment.ARGS_ITEM_NAME);
-        }
-    }
-
-    @Override
     public View onCreateView (final LayoutInflater inflater, final ViewGroup container,
                               final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_moredetails, container, false);
+        final WebView webView =
+                (WebView) inflater.inflate(R.layout.fragment_webview, container, false);
+        webView.loadUrl(GITHUB_URL);
 
-        final TextView itemNameTextView =
-                (TextView) view.findViewById(R.id.moreDetails_itemNameTextView);
-        itemNameTextView.setText(mItemName);
-
-        return view;
+        return webView;
     }
 
     @Override
@@ -77,8 +64,6 @@ public class MoreDetailsFragment extends SplitViewDetailFragment {
         super.onResume();
 
         Log.d(TAG, "onResume");
-
-        setTitle(mItemName + ": More Information");
     }
 
     @Override

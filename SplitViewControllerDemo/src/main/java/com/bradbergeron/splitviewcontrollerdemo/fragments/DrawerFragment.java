@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.fragments;
+package com.bradbergeron.splitviewcontrollerdemo.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -34,7 +34,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.bradbergeron.splitviewdemo.R;
+import com.bradbergeron.splitviewcontrollerdemo.R;
 
 import java.util.ArrayList;
 import java.util.List;

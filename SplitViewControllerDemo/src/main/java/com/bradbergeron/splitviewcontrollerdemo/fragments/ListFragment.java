@@ -20,26 +20,38 @@
  * SOFTWARE.
  */
 
-package com.bradbergeron.splitviewdemo.fragments;
+package com.bradbergeron.splitviewcontrollerdemo.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.bradbergeron.splitviewcontroller.SplitViewDetailFragment;
-import com.bradbergeron.splitviewdemo.R;
+import com.bradbergeron.splitviewcontroller.SplitViewMasterFragment;
+import com.bradbergeron.splitviewcontrollerdemo.R;
 
-public class DetailFragment extends SplitViewDetailFragment {
-    private static final String TAG = DetailFragment.class.getSimpleName();
+import java.util.ArrayList;
+import java.util.List;
 
-    public static final String ARGS_ITEM_NAME = "itemName";
+public class ListFragment extends SplitViewMasterFragment {
+    private static final String TAG = ListFragment.class.getSimpleName();
 
-    private String mItemName;
+    private final ArrayList<String> mItems = new ArrayList<String>() {{
+        add("Item 1");
+        add("Item 2");
+        add("Item 3");
+        add("Item 4");
+        add("Item 5");
+    }};
+
+    private ListView mListView;
+    private StringListAdapter mListAdapter;
 
 
     // ================================================================================
@@ -50,38 +62,31 @@ public class DetailFragment extends SplitViewDetailFragment {
     public void onCreate (final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Bundle args = getArguments();
-
-        if (args != null) {
-            mItemName = args.getString(ARGS_ITEM_NAME);
-        }
+        mListAdapter = new StringListAdapter(getActivity(), mItems);
     }
 
     @Override
     public View onCreateView (final LayoutInflater inflater, final ViewGroup container,
                               final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_details, container, false);
-
-        final TextView itemNameTextView =
-                (TextView) view.findViewById(R.id.detailView_itemNameTextView);
-        itemNameTextView.setText(mItemName);
-
-        final Button moreDetailsButton =
-                (Button) view.findViewById(R.id.detailView_moreDetailsButton);
-        moreDetailsButton.setOnClickListener(new View.OnClickListener() {
+        mListView = (ListView) inflater.inflate(R.layout.fragment_listview, container, false);
+        mListView.setAdapter(mListAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick (final View v) {
+            public void onItemClick (final AdapterView<?> parent, final View view,
+                                     final int position, final long id) {
+                final String itemName = mItems.get(position);
+
                 final Bundle args = new Bundle();
-                args.putString(ARGS_ITEM_NAME, mItemName);
+                args.putString(DetailFragment.ARGS_ITEM_NAME, itemName);
 
-                final MoreDetailsFragment moreDetailsFragment = (MoreDetailsFragment) Fragment
-                        .instantiate(getActivity(), MoreDetailsFragment.class.getName(), args);
+                final DetailFragment detailFragment = (DetailFragment) Fragment
+                        .instantiate(getActivity(), DetailFragment.class.getName(), args);
 
-                pushDetailFragment(moreDetailsFragment);
+                setDetailFragment(detailFragment);
             }
         });
 
-        return view;
+        return mListView;
     }
 
     @Override
@@ -96,8 +101,6 @@ public class DetailFragment extends SplitViewDetailFragment {
         super.onResume();
 
         Log.d(TAG, "onResume");
-
-        setTitle(mItemName);
     }
 
     @Override
@@ -112,5 +115,16 @@ public class DetailFragment extends SplitViewDetailFragment {
         Log.d(TAG, "onStop");
 
         super.onStop();
+    }
+
+
+    // ================================================================================
+    // List Adapter
+    // ================================================================================
+
+    private class StringListAdapter extends ArrayAdapter<String> {
+        public StringListAdapter (final Context context, final List<String> objects) {
+            super(context, android.R.layout.simple_list_item_1, objects);
+        }
     }
 }
