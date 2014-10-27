@@ -33,7 +33,7 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
             new FragmentManager.OnBackStackChangedListener() {
                 @Override
                 public void onBackStackChanged () {
-                    configureDetailFragment();
+                    configureChildFragments();
                 }
             };
 
@@ -56,28 +56,9 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     public void onStart () {
         super.onStart();
 
-        if (mMasterFragment == null) {
-            throw new IllegalStateException("Master view Fragment could not be found.");
-        }
+        configureChildFragments();
 
-        mMasterFragment.setController(this);
-
-        final FragmentManager fragmentManager = getFragmentManager();
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        if (mMasterFragment.isDetached()) {
-            transaction.attach(mMasterFragment);
-        }
-
-        if (mDetailFragment != null && mDetailFragment.isDetached()) {
-            transaction.attach(mDetailFragment);
-        }
-
-        transaction.commit();
-
-        fragmentManager.addOnBackStackChangedListener(mBackStackListener);
-
-        configureDetailFragment();
+        getFragmentManager().addOnBackStackChangedListener(mBackStackListener);
     }
 
     @Override
@@ -88,11 +69,11 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         if (mMasterFragment != null || mDetailFragment != null) {
             final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-            if (mMasterFragment != null) {
+            if (mMasterFragment != null && !mMasterFragment.isDetached()) {
                 transaction.detach(mMasterFragment);
             }
 
-            if (mDetailFragment != null) {
+            if (mDetailFragment != null && !mDetailFragment.isDetached()) {
                 transaction.detach(mDetailFragment);
             }
 
@@ -104,25 +85,58 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
 
     // ================================================================================
+    // Child Fragment Management
+    // ================================================================================
+
+    private void configureChildFragments () {
+        if (mMasterFragment == null) {
+            throw new IllegalStateException("Master view Fragment could not be found.");
+        }
+
+        mMasterFragment.setController(this);
+
+        mDetailFragment = (SplitViewDetailFragment) getFragmentManager()
+                .findFragmentById(getDetailFragmentContainerId());
+
+        if (mDetailFragment != null) {
+            mDetailFragment.setController(this);
+        }
+
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        if (isSplitViewLayout()) {
+            transaction.attach(mMasterFragment);
+
+            if (mDetailFragment != null) {
+                transaction.attach(mDetailFragment);
+            }
+        } else if (mDetailFragment != null) {
+            transaction.attach(mDetailFragment);
+        } else {
+            transaction.attach(mMasterFragment);
+        }
+
+        transaction.commit();
+
+        onDetailItemCountChanged(getFragmentManager().getBackStackEntryCount());
+    }
+
+
+    // ================================================================================
     // Master Fragment
     // ================================================================================
 
     public abstract int getMasterFragmentContainerId ();
 
     public void setMasterFragment (final SplitViewMasterFragment masterFragment) {
+        masterFragment.setController(this);
+
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(getMasterFragmentContainerId(), masterFragment,
+                            masterFragment.getClass().getSimpleName());
+        transaction.commit();
+
         mMasterFragment = masterFragment;
-    }
-
-    private void attachMasterFragment () {
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.attach(mMasterFragment);
-        transaction.commit();
-    }
-
-    private void detachMasterFragment () {
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.detach(mMasterFragment);
-        transaction.commit();
     }
 
 
@@ -154,22 +168,9 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         mDetailFragment = detailFragment;
     }
 
-    private void configureDetailFragment () {
-        mDetailFragment = (SplitViewDetailFragment) getFragmentManager()
-                .findFragmentById(getDetailFragmentContainerId());
+    public void setDetailViewTitle (final CharSequence title) { }
 
-        if (mDetailFragment != null) {
-            mDetailFragment.setController(this);
-        }
-
-        if (!isSplitViewLayout() && mDetailFragment != null) {
-            detachMasterFragment();
-        } else if (mMasterFragment.isDetached()) {
-            attachMasterFragment();
-        }
-
-        onDetailItemCountChanged(getFragmentManager().getBackStackEntryCount());
-    }
+    public void setDetailViewSubtitle (final CharSequence subtitle) { }
 
 
     // ================================================================================
@@ -178,15 +179,10 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
     public abstract boolean isSplitViewLayout ();
 
-    public void setTitle (final CharSequence title) { }
-
-    public void setSubtitle (final CharSequence subtitle) { }
-
 
     // ================================================================================
     // SplitViewNavigationListener
     // ================================================================================
-
 
     @Override
     public boolean usesNavigationDrawer () {
