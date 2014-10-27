@@ -22,16 +22,16 @@
 
 package com.bradbergeron.splitviewcontrollerdemo.activities;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -41,7 +41,8 @@ import android.view.View;
 import com.bradbergeron.splitviewcontrollerdemo.R;
 import com.bradbergeron.splitviewcontrollerdemo.fragments.DrawerFragment;
 
-public class MainActivity extends Activity implements DrawerFragment.DrawerItemSelectionListener {
+public class MainActivity extends ActionBarActivity
+        implements DrawerFragment.DrawerItemSelectionListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private DrawerLayout mDrawerLayout;
@@ -62,8 +63,8 @@ public class MainActivity extends Activity implements DrawerFragment.DrawerItemS
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
-                                                  R.string.drawer_open, R.string.drawer_close) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open,
+                                                  R.string.drawer_close) {
             @Override
             public void onDrawerOpened (final View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -80,7 +81,7 @@ public class MainActivity extends Activity implements DrawerFragment.DrawerItemS
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -123,6 +124,16 @@ public class MainActivity extends Activity implements DrawerFragment.DrawerItemS
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onBackPressed () {
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            mDrawerLayout.closeDrawer(Gravity.START);
+
+            return;
+        }
+
+        super.onBackPressed();
+    }
 
     // ================================================================================
     // Options Menu

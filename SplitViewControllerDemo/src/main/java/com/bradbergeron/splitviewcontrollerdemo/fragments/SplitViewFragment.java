@@ -27,7 +27,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -129,7 +128,7 @@ public class SplitViewFragment extends SplitViewController {
 
     @Override
     public boolean isSplitViewLayout () {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        return getResources().getBoolean(R.bool.is_split_view_layout);
     }
 
     @Override

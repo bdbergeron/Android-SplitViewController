@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2014 Bradley David Bergeron
   ~
@@ -21,26 +22,5 @@
   -->
 
 <resources>
-
-    <style name="SplitViewTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blue</item>
-
-        <item name="android:textColorPrimary">@color/dark_gray</item>
-        <item name="android:textColorPrimaryInverse">@color/glass</item>
-    </style>
-
-    <style name="SplitViewTheme.Button" parent="android:Widget.Button">
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:background">@drawable/button_solid_blue</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/button_solid_text</item>
-    </style>
-
-    <style name="SplitViewTheme.Button.Fitted">
-        <item name="android:minHeight">0dp</item>
-    </style>
-
+    <bool name="is_split_view_layout">true</bool>
 </resources>

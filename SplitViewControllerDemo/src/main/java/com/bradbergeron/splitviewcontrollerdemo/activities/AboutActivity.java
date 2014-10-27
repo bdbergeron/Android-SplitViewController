@@ -23,13 +23,13 @@
 package com.bradbergeron.splitviewcontrollerdemo.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import com.bradbergeron.splitviewcontrollerdemo.R;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends ActionBarActivity {
 
     // ================================================================================
     // Lifecycle
