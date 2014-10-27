@@ -29,11 +29,11 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "com.bradbergeron.splitviewdemo"
+        applicationId "com.bradbergeron.splitviewcontrollerdemo"
         minSdkVersion 15
         targetSdkVersion 19
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
     buildTypes {
         release {
