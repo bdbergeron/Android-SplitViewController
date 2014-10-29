@@ -46,7 +46,7 @@ public class SplitViewFragment extends SplitViewController {
                 @Override
                 public void onBackStackChanged () {
                     if (getFragmentManager().getBackStackEntryCount() == 0) {
-                        setTitle(getString(R.string.app_name));
+                        setDetailViewTitle(getString(R.string.app_name));
                     }
                 }
             };
@@ -68,13 +68,9 @@ public class SplitViewFragment extends SplitViewController {
             masterFragment = (SplitViewMasterFragment) Fragment
                     .instantiate(getActivity(), ListFragment.class.getName());
 
-            final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.add(getMasterFragmentContainerId(), masterFragment,
-                            masterFragment.getClass().getName());
-            transaction.commit();
+            setMasterFragment(masterFragment);
         }
 
-        setMasterFragment(masterFragment);
 
         return view;
     }
@@ -132,7 +128,7 @@ public class SplitViewFragment extends SplitViewController {
     }
 
     @Override
-    public void setTitle (final CharSequence title) {
+    public void setDetailViewTitle (final CharSequence title) {
         final ActionBar actionBar = getActivity().getActionBar();
 
         if (actionBar != null) {
@@ -141,7 +137,7 @@ public class SplitViewFragment extends SplitViewController {
     }
 
     @Override
-    public void setSubtitle (final CharSequence subtitle) {
+    public void setDetailViewSubtitle (final CharSequence subtitle) {
         final ActionBar actionBar = getActivity().getActionBar();
 
         if (actionBar != null) {
@@ -165,6 +161,25 @@ public class SplitViewFragment extends SplitViewController {
 
         if (activity instanceof MainActivity) {
             ((MainActivity) activity).setNavigationDrawerEnabled(enabled);
+        }
+    }
+
+    public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
+        return !isSplitViewLayout() && detailItemCount > 0;
+    }
+
+    @Override
+    public void onDetailItemCountChanged (final int detailItemCount) {
+        final ActionBar actionBar = getActivity().getActionBar();
+
+        if (actionBar != null) {
+            final boolean showUpIndicator = shouldShowActionBarUpIndicator(detailItemCount);
+            final boolean usesNavDrawer = usesNavigationDrawer();
+
+            actionBar.setDisplayHomeAsUpEnabled(showUpIndicator || usesNavDrawer);
+            actionBar.setHomeButtonEnabled(showUpIndicator || usesNavDrawer);
+
+            setNavigationDrawerEnabled(detailItemCount == 0 || isSplitViewLayout());
         }
     }
 }

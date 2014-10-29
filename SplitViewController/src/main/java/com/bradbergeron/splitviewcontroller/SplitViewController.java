@@ -178,37 +178,4 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     // ================================================================================
 
     public abstract boolean isSplitViewLayout ();
-
-
-    // ================================================================================
-    // SplitViewNavigationListener
-    // ================================================================================
-
-    @Override
-    public boolean usesNavigationDrawer () {
-        return false;
-    }
-
-    @Override
-    public void setNavigationDrawerEnabled (final boolean enabled) { }
-
-    @Override
-    public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
-        return !isSplitViewLayout() && detailItemCount > 0;
-    }
-
-    @Override
-    public void onDetailItemCountChanged (final int detailItemCount) {
-        final ActionBar actionBar = getActivity().getActionBar();
-
-        if (actionBar != null) {
-            final boolean showUpIndicator = shouldShowActionBarUpIndicator(detailItemCount);
-            final boolean usesNavDrawer = usesNavigationDrawer();
-
-            actionBar.setDisplayHomeAsUpEnabled(showUpIndicator || usesNavDrawer);
-            actionBar.setHomeButtonEnabled(showUpIndicator || usesNavDrawer);
-
-            setNavigationDrawerEnabled(detailItemCount == 0 || isSplitViewLayout());
-        }
-    }
 }
