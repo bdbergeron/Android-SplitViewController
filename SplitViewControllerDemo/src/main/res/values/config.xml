@@ -22,10 +22,5 @@
   -->
 
 <resources>
-    <color name="glass">#f8f9f9</color>
-    <color name="dark_gray">#364249</color>
-
-    <color name="blue">#1A3E67</color>
-    <color name="dark_blue">#092A4E</color>
-    <color name="yellow">#DCDC41</color>
+    <bool name="is_split_view_layout">false</bool>
 </resources>
