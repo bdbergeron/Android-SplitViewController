@@ -22,10 +22,12 @@
 
 package com.bradbergeron.splitviewcontrollerdemo.activities;
 
-import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.bradbergeron.splitviewcontrollerdemo.R;
 
@@ -39,13 +41,16 @@ public class AboutActivity extends ActionBarActivity {
     protected void onCreate (final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final ActionBar actionBar = getActionBar();
+        setContentView(R.layout.activity_about);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        setContentView(R.layout.activity_about);
     }
 
 

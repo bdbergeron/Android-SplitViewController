@@ -22,12 +22,12 @@
 
 package com.bradbergeron.splitviewcontrollerdemo.fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +70,6 @@ public class SplitViewFragment extends SplitViewController {
 
             setMasterFragment(masterFragment);
         }
-
 
         return view;
     }
@@ -129,7 +128,7 @@ public class SplitViewFragment extends SplitViewController {
 
     @Override
     public void setDetailViewTitle (final CharSequence title) {
-        final ActionBar actionBar = getActivity().getActionBar();
+        final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setTitle(isSplitViewLayout() ? getString(R.string.app_name) : title);
@@ -138,7 +137,7 @@ public class SplitViewFragment extends SplitViewController {
 
     @Override
     public void setDetailViewSubtitle (final CharSequence subtitle) {
-        final ActionBar actionBar = getActivity().getActionBar();
+        final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 
         if (actionBar != null) {
             actionBar.setSubtitle(isSplitViewLayout() ? null : subtitle);
@@ -164,13 +163,20 @@ public class SplitViewFragment extends SplitViewController {
         }
     }
 
+    @Override
     public boolean shouldShowActionBarUpIndicator (final int detailItemCount) {
         return !isSplitViewLayout() && detailItemCount > 0;
     }
 
     @Override
     public void onDetailItemCountChanged (final int detailItemCount) {
-        final ActionBar actionBar = getActivity().getActionBar();
+        final ActionBarActivity activity = (ActionBarActivity) getActivity();
+
+        if (activity == null) {
+            return;
+        }
+
+        final ActionBar actionBar = activity.getSupportActionBar();
 
         if (actionBar != null) {
             final boolean showUpIndicator = shouldShowActionBarUpIndicator(detailItemCount);

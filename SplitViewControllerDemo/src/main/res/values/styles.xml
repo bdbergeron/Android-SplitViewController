@@ -23,10 +23,21 @@
 <resources>
 
     <style name="SplitViewTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+
         <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/dark_blue</item>
+        <item name="colorAccent">@color/yellow</item>
 
         <item name="android:textColorPrimary">@color/dark_gray</item>
         <item name="android:textColorPrimaryInverse">@color/glass</item>
+    </style>
+
+    <style name="SplitViewTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
     <style name="SplitViewTheme.Button" parent="android:Widget.Button">

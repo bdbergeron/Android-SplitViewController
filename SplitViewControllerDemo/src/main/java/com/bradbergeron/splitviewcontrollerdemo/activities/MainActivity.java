@@ -32,6 +32,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -60,6 +61,16 @@ public class MainActivity extends ActionBarActivity
 
         setContentView(R.layout.activty_main);
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
 
@@ -80,13 +91,6 @@ public class MainActivity extends ActionBarActivity
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
 
         mDrawerFragment = (DrawerFragment) getFragmentManager().findFragmentById(R.id.drawer);
     }
@@ -132,6 +136,14 @@ public class MainActivity extends ActionBarActivity
             return;
         }
 
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate();
+
+            return;
+        }
+
         super.onBackPressed();
     }
 
@@ -148,7 +160,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onPrepareOptionsMenu (final Menu menu) {
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(Gravity.START);
+        final boolean drawerOpen = mDrawerLayout.isDrawerOpen(Gravity.START);
         menu.findItem(R.id.mainMenu_aboutMenuItem).setVisible(!drawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
