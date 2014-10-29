@@ -123,6 +123,16 @@ public class MainActivity extends Activity implements DrawerFragment.DrawerItemS
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onBackPressed () {
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            mDrawerLayout.closeDrawer(Gravity.START);
+
+            return;
+        }
+
+        super.onBackPressed();
+    }
 
     // ================================================================================
     // Options Menu
