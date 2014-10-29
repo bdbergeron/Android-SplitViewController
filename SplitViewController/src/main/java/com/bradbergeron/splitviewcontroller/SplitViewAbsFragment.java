@@ -58,11 +58,5 @@ abstract class SplitViewAbsFragment extends Fragment {
     // Helpers
     // ================================================================================
 
-    protected void setTitle (final CharSequence title) {
-        mController.setTitle(title);
-    }
-
-    protected void setSubtitle (final CharSequence subtitle) {
-        mController.setSubtitle(subtitle);
-    }
+    protected abstract int getViewId ();
 }

@@ -31,4 +31,14 @@ public abstract class SplitViewMasterFragment extends SplitViewAbsFragment {
     protected void setDetailFragment (final SplitViewDetailFragment detailFragment) {
         getController().setDetailFragment(detailFragment);
     }
+
+
+    // ================================================================================
+    // Helpers
+    // ================================================================================
+
+    @Override
+    protected int getViewId () {
+        return getController().getMasterFragmentContainerId();
+    }
 }

@@ -38,4 +38,21 @@ public abstract class SplitViewDetailFragment extends SplitViewAbsFragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    // ================================================================================
+    // Helpers
+    // ================================================================================
+
+    protected void setTitle (final CharSequence title) {
+        getController().setDetailViewTitle(title);
+    }
+
+    protected void setSubtitle (final CharSequence subtitle) {
+        getController().setDetailViewSubtitle(subtitle);
+    }
+
+    @Override
+    protected int getViewId () {
+        return getController().getDetailFragmentContainerId();
+    }
 }
