@@ -147,12 +147,18 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     public abstract int getDetailFragmentContainerId ();
 
     public void setDetailFragment (final SplitViewDetailFragment detailFragment) {
+        if (detailFragment == null) {
+            clearDetailFragment(false);
+
+            return;
+        }
+
         detailFragment.setController(this);
 
         final FragmentManager fragmentManager = getFragmentManager();
 
         if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            clearDetailFragment(false);
         }
 
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -166,6 +172,16 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         transaction.commit();
 
         mDetailFragment = detailFragment;
+    }
+
+    public void clearDetailFragment (final boolean animated) {
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        if (animated) {
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
     }
 
     public void setDetailViewTitle (final CharSequence title) { }
