@@ -31,9 +31,13 @@ public abstract class SplitViewDetailFragment extends SplitViewAbsFragment {
     // ================================================================================
 
     protected void pushDetailFragment (final SplitViewDetailFragment detailFragment) {
+        pushDetailFragment(detailFragment, getFragmentManager().beginTransaction());
+    }
+
+    protected void pushDetailFragment (final SplitViewDetailFragment detailFragment,
+                                       final FragmentTransaction transaction) {
         detailFragment.setController(getController());
 
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(getId(), detailFragment);
         transaction.addToBackStack(null);
         transaction.commit();

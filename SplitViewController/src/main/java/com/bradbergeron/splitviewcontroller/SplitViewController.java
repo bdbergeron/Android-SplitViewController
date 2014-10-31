@@ -22,7 +22,6 @@
 
 package com.bradbergeron.splitviewcontroller;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -147,6 +146,11 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     public abstract int getDetailFragmentContainerId ();
 
     public void setDetailFragment (final SplitViewDetailFragment detailFragment) {
+        setDetailFragment(detailFragment, getFragmentManager().beginTransaction());
+    }
+
+    public void setDetailFragment (final SplitViewDetailFragment detailFragment,
+                                   final FragmentTransaction transaction) {
         if (detailFragment == null) {
             clearDetailFragment(false);
 
@@ -161,7 +165,6 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
             clearDetailFragment(false);
         }
 
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(getDetailFragmentContainerId(), detailFragment);
         transaction.addToBackStack(null);
 

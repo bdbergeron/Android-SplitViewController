@@ -22,6 +22,8 @@
 
 package com.bradbergeron.splitviewcontroller;
 
+import android.app.FragmentTransaction;
+
 public abstract class SplitViewMasterFragment extends SplitViewAbsFragment {
 
     // ================================================================================
@@ -30,6 +32,11 @@ public abstract class SplitViewMasterFragment extends SplitViewAbsFragment {
 
     protected void setDetailFragment (final SplitViewDetailFragment detailFragment) {
         getController().setDetailFragment(detailFragment);
+    }
+
+    protected void setDetailFragment (final SplitViewDetailFragment detailFragment, final
+                                      FragmentTransaction transaction) {
+        getController().setDetailFragment(detailFragment, transaction);
     }
 
 
