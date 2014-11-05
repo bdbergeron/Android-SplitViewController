@@ -28,6 +28,4 @@ public interface SplitViewNavigationListener {
     public void setNavigationDrawerEnabled (final boolean enabled);
 
     public boolean shouldShowActionBarUpIndicator (final int detailItemCount);
-
-    public void onDetailItemCountChanged (final int detailItemCount);
 }

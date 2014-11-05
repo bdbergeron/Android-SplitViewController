@@ -27,6 +27,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public abstract class SplitViewController extends Fragment implements SplitViewNavigationListener {
     private final FragmentManager.OnBackStackChangedListener mBackStackListener =
             new FragmentManager.OnBackStackChangedListener() {
@@ -35,6 +37,9 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
                     configureChildFragments();
                 }
             };
+
+    private final ArrayList<OnDetailViewChangedListener> mDetailViewChangedListeners =
+            new ArrayList<OnDetailViewChangedListener>();
 
     private SplitViewMasterFragment mMasterFragment;
     private SplitViewDetailFragment mDetailFragment;
@@ -94,14 +99,16 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
         mMasterFragment.setController(this);
 
-        mDetailFragment = (SplitViewDetailFragment) getFragmentManager()
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        mDetailFragment = (SplitViewDetailFragment) fragmentManager
                 .findFragmentById(getDetailFragmentContainerId());
 
         if (mDetailFragment != null) {
             mDetailFragment.setController(this);
         }
 
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         if (isSplitViewLayout()) {
             transaction.attach(mMasterFragment);
@@ -117,7 +124,11 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
         transaction.commit();
 
-        onDetailItemCountChanged(getFragmentManager().getBackStackEntryCount());
+        final int detailViewCount = fragmentManager.getBackStackEntryCount();
+
+        for (final OnDetailViewChangedListener listener : mDetailViewChangedListeners) {
+            listener.onDetailViewChanged(detailViewCount);
+        }
     }
 
 
@@ -197,4 +208,23 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     // ================================================================================
 
     public abstract boolean isSplitViewLayout ();
+
+
+    // ================================================================================
+    // OnDetailViewChangedListener
+    // ================================================================================
+
+    public void addOnDetailViewChangedListener (final OnDetailViewChangedListener listener) {
+        if (!mDetailViewChangedListeners.contains(listener)) {
+            mDetailViewChangedListeners.add(listener);
+        }
+    }
+
+    public void removeOnDetailViewChangedListener (final OnDetailViewChangedListener listener) {
+        mDetailViewChangedListeners.remove(listener);
+    }
+
+    public interface OnDetailViewChangedListener {
+        public void onDetailViewChanged (final int detailViewItemCount);
+    }
 }
