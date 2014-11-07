@@ -44,6 +44,8 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     private SplitViewMasterFragment mMasterFragment;
     private SplitViewDetailFragment mDetailFragment;
 
+    private boolean mNotifyDetailViewListeners = true;
+
 
     // ================================================================================
     // Fragment Lifecycle
@@ -101,8 +103,11 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
         final FragmentManager fragmentManager = getFragmentManager();
 
-        mDetailFragment = (SplitViewDetailFragment) fragmentManager
+        final SplitViewDetailFragment detailFragment = (SplitViewDetailFragment) fragmentManager
                 .findFragmentById(getDetailFragmentContainerId());
+
+        mDetailFragment =
+                (detailFragment != null && detailFragment.isRemoving()) ? null : detailFragment;
 
         if (mDetailFragment != null) {
             mDetailFragment.setController(this);
@@ -124,11 +129,7 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
         transaction.commit();
 
-        final int detailViewCount = fragmentManager.getBackStackEntryCount();
-
-        for (final OnDetailViewChangedListener listener : mDetailViewChangedListeners) {
-            listener.onDetailViewChanged(detailViewCount);
-        }
+        notifyDetailViewChangedListeners();
     }
 
 
@@ -162,18 +163,20 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
 
     public void setDetailFragment (final SplitViewDetailFragment detailFragment,
                                    final FragmentTransaction transaction) {
+        final FragmentManager fragmentManager = getFragmentManager();
+
         if (detailFragment == null) {
-            clearDetailFragment(false);
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             return;
         }
 
         detailFragment.setController(this);
 
-        final FragmentManager fragmentManager = getFragmentManager();
-
         if (fragmentManager.getBackStackEntryCount() > 0) {
-            clearDetailFragment(false);
+            mNotifyDetailViewListeners = false;
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            mNotifyDetailViewListeners = true;
         }
 
         transaction.replace(getDetailFragmentContainerId(), detailFragment);
@@ -188,19 +191,17 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
         mDetailFragment = detailFragment;
     }
 
-    public void clearDetailFragment (final boolean animated) {
-        final FragmentManager fragmentManager = getFragmentManager();
-
-        if (animated) {
-            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        } else {
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
-    }
-
     public void setDetailViewTitle (final CharSequence title) { }
 
     public void setDetailViewSubtitle (final CharSequence subtitle) { }
+
+    private void notifyDetailViewChangedListeners () {
+        if (mNotifyDetailViewListeners) {
+            for (final OnDetailViewChangedListener listener : mDetailViewChangedListeners) {
+                listener.onDetailViewChanged(mDetailFragment);
+            }
+        }
+    }
 
 
     // ================================================================================
@@ -225,6 +226,6 @@ public abstract class SplitViewController extends Fragment implements SplitViewN
     }
 
     public interface OnDetailViewChangedListener {
-        public void onDetailViewChanged (final int detailViewItemCount);
+        public void onDetailViewChanged (final SplitViewDetailFragment detailViewFragment);
     }
 }
